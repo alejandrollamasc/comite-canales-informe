@@ -1,0 +1,17 @@
+/* Barra de navegación transversal - Comité de Canales Seguros Bolívar */
+#hub-nav{position:sticky;top:0;z-index:1000;background:#009C3C;display:flex;align-items:center;gap:8px;
+  padding:10px 16px;box-shadow:0 2px 8px rgba(0,0,0,.12);flex-wrap:wrap}
+#hub-nav .hn-home{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;
+  border-radius:10px;background:rgba(255,255,255,.14);color:#fff;text-decoration:none;font-size:18px;
+  transition:background .15s}
+#hub-nav .hn-home:hover{background:#FFD100;color:#00492A}
+#hub-nav .hn-home:focus-visible{outline:3px solid #FFD100;outline-offset:2px}
+#hub-nav .hn-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:10px;
+  color:#fff;text-decoration:none;font:600 14px/1 "Segoe UI",system-ui,Roboto,Arial,sans-serif;
+  background:rgba(255,255,255,.10);transition:background .15s,color .15s;white-space:nowrap}
+#hub-nav .hn-btn:hover{background:rgba(255,255,255,.22)}
+#hub-nav .hn-btn.active{background:#FFD100;color:#00492A}
+#hub-nav .hn-btn:focus-visible{outline:3px solid #FFD100;outline-offset:2px}
+#hub-nav .hn-sep{flex:1}
+@media(max-width:640px){#hub-nav{gap:6px;padding:8px 10px;overflow-x:auto}
+  #hub-nav .hn-btn{padding:7px 10px;font-size:13px}}

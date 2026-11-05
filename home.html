@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Comité de Canales — Portada de informes</title>
+<link rel="stylesheet" href="hubnav.css">
+<style>
+:root{--verde:#009C3C;--verde-md:#005A22;--amarillo:#FFD100;--bg:#F4F6F5;--bord:#E2E6E3;--muted:#5d6b63}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:"Segoe UI",system-ui,Roboto,Arial,sans-serif;color:#1d2b22}
+.wrap{max-width:960px;margin:0 auto;padding:24px 18px 60px}
+.header{background:linear-gradient(135deg,var(--verde),var(--verde-md));color:#fff;border-radius:16px;
+ padding:30px 22px;text-align:center;margin-top:22px;box-shadow:0 8px 24px rgba(0,120,46,.18)}
+.eyebrow{display:inline-flex;gap:8px;align-items:center;background:rgba(255,255,255,.14);padding:6px 14px;
+ border-radius:999px;font-size:12.5px;font-weight:700;letter-spacing:.08em}
+.eyebrow .dot{width:9px;height:9px;border-radius:50%;background:var(--amarillo)}
+.header h1{margin:14px 0 2px;font-size:28px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-top:26px}
+.card{background:#fff;border:1px solid var(--bord);border-radius:14px;padding:20px;text-align:center;
+ box-shadow:0 2px 10px rgba(0,0,0,.04);transition:transform .12s,box-shadow .12s}
+.card:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(0,0,0,.08)}
+.card .emoji{font-size:34px}
+.card h3{margin:10px 0 14px;font-size:18px}
+.card a{display:inline-block;background:var(--verde);color:#fff;text-decoration:none;font-weight:700;
+ padding:9px 18px;border-radius:10px;transition:background .15s,color .15s}
+.card a:hover{background:var(--amarillo);color:#00492A}
+</style>
+</head>
+<body data-informe="home">
+<div id="hub-nav"></div>
+<div class="wrap">
+  <div class="header">
+    <span class="eyebrow"><span class="dot"></span>COMITÉ DE CANALES</span>
+    <h1>Informes de estatus</h1>
+  </div>
+  <div class="grid" id="cards"></div>
+</div>
+<script src="informes.js"></script>
+<script>
+/* usa la misma lista central embebida en informes.js si estuviera expuesta;
+   como fallback, pinta una tarjeta por el informe conocido */
+(function(){
+  var cards=[{emoji:'📊',nombre:'Canales Digitales',url:'Canales_Digitales.html'}];
+  var c=document.getElementById('cards');
+  c.innerHTML=cards.map(function(x){
+    return '<div class="card"><div class="emoji">'+x.emoji+'</div><h3>'+x.nombre+'</h3>'+
+      '<a href="'+x.url+'">Ver informe</a></div>';}).join('');
+})();
+</script>
+</body>
+</html>
