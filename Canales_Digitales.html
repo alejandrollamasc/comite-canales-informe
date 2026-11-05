@@ -71,6 +71,7 @@ th{color:var(--muted);font-size:12.5px;text-transform:uppercase;letter-spacing:.
 .lgd{font-size:11.5px;color:var(--muted);display:flex;gap:14px;margin-top:6px;flex-wrap:wrap}
 .lgd span{display:inline-flex;align-items:center;gap:5px}
 .lgd i{width:14px;height:3px;display:inline-block;border-radius:2px}
+.lgd i.dash{height:0;border-top:3px dashed #e0683c;background:none!important;border-radius:0}
 
 /* iniciativas ampliadas */
 .ini-table{width:100%;border-collapse:collapse;margin-top:10px;font-size:13.5px}
@@ -317,7 +318,7 @@ th{color:var(--muted);font-size:12.5px;text-transform:uppercase;letter-spacing:.
  <button class="modal-close" id="modal-close" aria-label="Cerrar">×</button>
  <h3 id="modal-title"></h3><div class="modal-sub" id="modal-sub"></div>
  <div class="modal-obj" id="modal-obj"></div><div id="modal-chart"></div>
- <div class="lgd"><span><i style="background:#009C3C"></i>Valor mensual</span><span><i style="background:#e0683c"></i>Meta</span></div>
+ <div class="lgd"><span><i style="background:#009C3C"></i>Real</span><span><i class="dash" style="background:#e0683c"></i>Meta mensual</span></div>
 </div></div>
 
 <script>
@@ -366,29 +367,37 @@ function openModal(group,id){
  var k=KPI[group][id]; if(!k)return;
  document.getElementById('modal-title').textContent=k.n;
  var metaMeta0=(k.meta===0);
- var cumpl=metaMeta0?(k.val===0?'En meta':'Fuera de meta'):(k.pct===null?'—':Math.round(k.pct*100)+'% de cumplimiento');
- document.getElementById('modal-sub').textContent='Tendencia mensual 2026 · '+cumpl+(k.mode==='acum'?' · acumulado vs meta acumulada':' · vs meta');
- document.getElementById('modal-obj').textContent='🎯 '+k.obj;
+ var cumpl=metaMeta0?(k.val===0?'En meta':'Fuera de meta'):(k.pct===null?'\u2014':Math.round(k.pct*100)+'% de cumplimiento');
+ document.getElementById('modal-sub').textContent='Tendencia mensual 2026 \u00b7 '+cumpl+(k.mode==='acum'?' \u00b7 acumulado vs meta acumulada':' \u00b7 vs meta');
+ document.getElementById('modal-obj').textContent='\ud83c\udfaf '+k.obj;
  var w=580,h=250,pad=38,n=k.s.length;
  var vals=k.s.map(function(x){return x[1];});
- var metaLine = metaMeta0?0:(k.mode==='acum'?null:k.meta);  // línea de meta solo si meta mensual simple
- var mn=Math.min.apply(null,vals), mx=Math.max.apply(null,vals);
- if(metaLine!==null){mn=Math.min(mn,metaLine);mx=Math.max(mx,metaLine);}
+ // meta mensual constante por mes: metaMeta0 -> 0, resto -> k.meta (meta por periodo)
+ var metaVal = k.meta;
+ // serie de meta (una por mes): linea horizontal constante
+ var metaSerie=k.s.map(function(){return metaVal;});
+ var allvals=vals.concat(metaSerie);
+ var mn=Math.min.apply(null,allvals), mx=Math.max.apply(null,allvals);
  if(mn===mx){mn=mn*0.9;mx=mx*1.1||1;}
+ if(mn>0 && (mx-mn)/mx<0.15){mn=mn*0.85;} // dar aire si real y meta estan muy juntos
  function X(i){return pad+(w-2*pad)*(n<=1?0.5:i/(n-1));}
  function Y(v){return h-pad-(h-2*pad)*((v-mn)/(mx-mn));}
- var pts=k.s.map(function(p,i){return X(i)+','+Y(p[1]);}).join(' ');
+ var ptsReal=k.s.map(function(p,i){return X(i)+','+Y(p[1]);}).join(' ');
+ var ptsMeta=metaSerie.map(function(v,i){return X(i)+','+Y(v);}).join(' ');
  var dots='',labels='',vlabels='';
  k.s.forEach(function(p,i){
-  dots+='<circle cx="'+X(i)+'" cy="'+Y(p[1])+'" r="3.5" fill="#009C3C"><title>'+p[0]+': '+fmt(p[1],k.u)+'</title></circle>';
+  dots+='<circle cx="'+X(i)+'" cy="'+Y(p[1])+'" r="3.5" fill="#009C3C"><title>'+p[0]+' \u00b7 real: '+fmt(p[1],k.u)+' \u00b7 meta: '+fmt(metaVal,k.u)+'</title></circle>';
   labels+='<text x="'+X(i)+'" y="'+(h-pad+15)+'" font-size="10" fill="#5d6b63" text-anchor="middle">'+p[0]+'</text>';
   vlabels+='<text x="'+X(i)+'" y="'+(Y(p[1])-8)+'" font-size="9" fill="#1d2b22" text-anchor="middle">'+fmt(p[1],k.u)+'</text>';
  });
- var metaSvg='';
- if(metaLine!==null){var ym=Y(metaLine);metaSvg='<line x1="'+pad+'" y1="'+ym+'" x2="'+(w-pad)+'" y2="'+ym+'" stroke="#e0683c" stroke-width="1.5" stroke-dasharray="5 4"/><text x="'+(w-pad)+'" y="'+(ym-5)+'" font-size="10" fill="#e0683c" text-anchor="end">meta '+fmt(metaLine,k.u)+'</text>';}
- var svg='<svg viewBox="0 0 '+w+' '+h+'" width="100%" role="img" aria-label="Tendencia">'
+ // etiqueta de meta al final de su linea
+ var ymEnd=Y(metaVal);
+ var metaTag='<text x="'+(w-pad)+'" y="'+(ymEnd-6)+'" font-size="10" fill="#e0683c" text-anchor="end" font-weight="700">meta '+fmt(metaVal,k.u)+'</text>';
+ var svg='<svg viewBox="0 0 '+w+' '+h+'" width="100%" role="img" aria-label="Tendencia real vs meta">'
   +'<line x1="'+pad+'" y1="'+(h-pad)+'" x2="'+(w-pad)+'" y2="'+(h-pad)+'" stroke="#E2E6E3"/>'
-  +'<polyline fill="none" stroke="#009C3C" stroke-width="2.5" points="'+pts+'"/>'+metaSvg+dots+vlabels+labels+'</svg>';
+  +'<polyline fill="none" stroke="#e0683c" stroke-width="2" stroke-dasharray="6 4" points="'+ptsMeta+'"/>'
+  +'<polyline fill="none" stroke="#009C3C" stroke-width="2.5" points="'+ptsReal+'"/>'
+  +metaTag+dots+vlabels+labels+'</svg>';
  document.getElementById('modal-chart').innerHTML=svg;
  document.getElementById('modal').classList.add('open');
 }
