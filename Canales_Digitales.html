@@ -134,6 +134,12 @@ th{color:var(--muted);font-size:12.5px;text-transform:uppercase;letter-spacing:.
 .hist-list .ht{color:var(--txt);flex:1;min-width:180px}
 .hist-scroll{max-height:340px;overflow-y:auto;padding-right:6px;border:1px solid var(--bord);border-radius:8px;padding:6px 10px;background:#fff}
 .hist-empty{font-size:12.5px;color:var(--muted);font-style:italic}
+
+/* banner de propósito */
+.proposito-banner{display:flex;gap:12px;align-items:flex-start;background:linear-gradient(135deg,var(--verde-suave),#fff);border:1px solid #cfe8d8;border-left:5px solid var(--verde);border-radius:12px;padding:14px 16px;margin:14px 0 4px}
+.proposito-banner .pb-ico{font-size:22px;line-height:1.2;flex-shrink:0}
+.proposito-banner p{margin:0;font-size:14.5px;line-height:1.5;color:var(--verde-md);font-style:italic}
+.proposito-banner p strong{font-style:normal;color:var(--verde-md)}
 .hs{font-size:10.5px;font-weight:700;padding:1px 7px;border-radius:999px;white-space:nowrap;flex-shrink:0}
 .hs.ok{background:#e4f5ea;color:var(--ok)}
 .hs.warn{background:#fdf3d7;color:#8a6500}
@@ -155,6 +161,7 @@ th{color:var(--muted);font-size:12.5px;text-transform:uppercase;letter-spacing:.
  <section class="activo" id="ventas-digitales">
   <div class="activo-head"><h2>🛒 Negocios digitales - Tienda seguros</h2>
    <span class="counters">🟢 13 · 🟡 8 · 🔵 1</span></div>
+  <div class="proposito-banner"><span class="pb-ico">🎯</span><p><strong>Propósito.</strong> Revolucionar la forma de comprar seguros, haciéndolos accesibles, simples y al alcance de todos, que comprar un seguro sea tan fácil y natural como cualquier compra en línea.</p></div>
   <div class="chips"><span class="chip">13 terminadas</span><span class="chip">8 en curso</span><span class="chip">1 detenidas/refinamiento</span></div>
   <p class="proposito"><strong>Ventas Digitales (Tienda de Seguros).</strong> Canal digital de cotización, emisión y venta asistida de seguros. Cada indicador muestra su valor actual, el % de cumplimiento vs la meta y la iniciativa en curso que lo impacta.</p>
 
@@ -326,7 +333,7 @@ var KPI={"ventas-digitales": {"VD-CONF-001": {"n": "Primas perdidas ($ mensual)"
 function fmt(v,u){
  if(v===null||v===undefined)return '—';
  if(u==='%'){var n=v<=1?v*100:v;return n.toFixed(1).replace(/\.0$/,'')+'%';}
- if(u==='$'){return '$'+Math.round(v).toLocaleString('es-CO');}
+ if(u==='$'){var mill=v/1000000;var txt=Math.abs(mill)>=100?Math.round(mill).toLocaleString('es-CO'):(Math.round(mill*10)/10).toLocaleString('es-CO');return '$'+txt+' M';}
  if(u==='min'){var m=Math.floor(v),s=Math.round((v-m)*60);return m+':'+String(s).padStart(2,'0')+' min';}
  if(u==='s'){return Math.round(v)+' s';}
  return (''+ (Math.round(v*100)/100)).replace(/\.?0+$/,'')||'0';
