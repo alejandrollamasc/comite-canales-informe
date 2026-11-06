@@ -221,8 +221,8 @@ th{color:var(--muted);font-size:12.5px;text-transform:uppercase;letter-spacing:.
   <span class="chip-date" style="margin-left:8px">📆 Periodo de trabajo: Septiembre – Noviembre 2026</span>
  </div>
 
- <section class="activo" id="ventas-digitales">
-  <div class="activo-bar verde" role="button" tabindex="0" aria-expanded="true" data-activo="vd"><h2>🛒 Negocios digitales · Tienda seguros</h2><span class="bar-counters">🟢 16 · 🟡 4<span class="bar-toggle">▼</span></span></div>
+ <section class="activo collapsed" id="ventas-digitales">
+  <div class="activo-bar verde" role="button" tabindex="0" aria-expanded="false" data-activo="vd"><h2>🛒 Negocios digitales · Tienda seguros</h2><span class="bar-counters">🟢 16 · 🟡 4<span class="bar-toggle">▼</span></span></div>
   <div class="activo-body">
   <div class="proposito-banner"><span class="pb-ico">🎯</span><p><strong>Propósito.</strong> Revolucionar la forma de comprar seguros, haciéndolos accesibles, simples y al alcance de todos, que comprar un seguro sea tan fácil y natural como cualquier compra en línea.</p></div>
   <div class="chips"><span class="chip">16 terminadas</span><span class="chip">4 en curso</span></div>
@@ -375,8 +375,8 @@ th{color:var(--muted);font-size:12.5px;text-transform:uppercase;letter-spacing:.
  </div>
  </section>
 
- <section class="activo azul-activo" id="pagos-digitales">
-  <div class="activo-bar azul" role="button" tabindex="0" aria-expanded="true" data-activo="pd"><h2>💳 Pagos digitales</h2><span class="bar-counters"><span class="bar-toggle">▼</span></span></div>
+ <section class="activo azul-activo collapsed" id="pagos-digitales">
+  <div class="activo-bar azul" role="button" tabindex="0" aria-expanded="false" data-activo="pd"><h2>💳 Pagos digitales</h2><span class="bar-counters"><span class="bar-toggle">▼</span></span></div>
   <div class="activo-body">
   <p class="proposito"><strong>Pagos Digitales (Pasarela de Pagos).</strong> Recaudo y pagos en línea. Solo monitoreo de indicadores: cada tarjeta muestra el valor actual, el % de cumplimiento vs meta y su tendencia.</p>
   <div class="acc" id="acc-pas-kpis"><div class="acc-head"><span class="t">📊 KPIs</span><button class="acc-toggle">Ver ▾</button></div>
@@ -512,11 +512,6 @@ document.querySelectorAll('.activo-bar').forEach(function(bar){
   bar.addEventListener('click',toggle);
   bar.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();}});
 });
-// en mobile (<=720px) iniciar colapsadas
-if(window.matchMedia('(max-width:720px)').matches){
-  document.querySelectorAll('.activo').forEach(function(sec){sec.classList.add('collapsed');
-    var bar=sec.querySelector('.activo-bar'); if(bar)bar.setAttribute('aria-expanded','false');});
-}
 document.querySelectorAll('.kpi-container').forEach(renderKPIs);
 renderGantt();
 
