@@ -149,7 +149,8 @@ th{color:var(--muted);font-size:12.5px;text-transform:uppercase;letter-spacing:.
  .kpi-grid{grid-template-columns:1fr}
  .kpi .cur{font-size:20px}
  .proposito-banner{padding:12px}
- .proposito-banner p{font-size:13.5px}
+ .proposito-banner p{font-size:15px}
+ .proposito-banner{padding:16px 18px}
  .modal-card{padding:16px}
  .hist-board{gap:6px}
  .hb{font-size:11px;padding:4px 9px}
@@ -199,10 +200,13 @@ th{color:var(--muted);font-size:12.5px;text-transform:uppercase;letter-spacing:.
 .hist-all-link:hover{background:#e0ebe4;text-decoration:underline}
 
 /* banner de propósito */
-.proposito-banner{display:flex;gap:12px;align-items:flex-start;background:linear-gradient(135deg,var(--verde-suave),#fff);border:1px solid #cfe8d8;border-left:5px solid var(--verde);border-radius:12px;padding:14px 16px;margin:14px 0 4px}
-.proposito-banner .pb-ico{font-size:22px;line-height:1.2;flex-shrink:0}
-.proposito-banner p{margin:0;font-size:14.5px;line-height:1.5;color:var(--verde-md);font-style:italic}
-.proposito-banner p strong{font-style:normal;color:var(--verde-md)}
+.proposito-banner{display:flex;gap:16px;align-items:center;background:linear-gradient(135deg,var(--verde) 0%,var(--verde-md) 100%);border:none;border-radius:16px;padding:22px 24px;margin:16px 0 6px;box-shadow:0 6px 20px rgba(0,120,46,.22);position:relative;overflow:hidden}
+.proposito-banner::after{content:'';position:absolute;right:-30px;top:-30px;width:140px;height:140px;border-radius:50%;background:rgba(255,255,255,.08)}
+.proposito-banner .pb-ico{width:46px;height:46px;flex-shrink:0;color:var(--amarillo);background:rgba(255,255,255,.14);border-radius:12px;padding:9px;z-index:1}
+.proposito-banner .pb-text{z-index:1}
+.proposito-banner .pb-tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--amarillo);margin-bottom:4px}
+.proposito-banner p{margin:0;font-size:18px;line-height:1.45;color:#fff;font-weight:600;font-style:normal}
+.proposito-banner p strong{color:var(--amarillo);font-weight:800}
 .hs{font-size:10.5px;font-weight:700;padding:1px 7px;border-radius:999px;white-space:nowrap;flex-shrink:0}
 .hs.ok{background:#e4f5ea;color:var(--ok)}
 .hs.warn{background:#fdf3d7;color:#8a6500}
@@ -224,7 +228,7 @@ th{color:var(--muted);font-size:12.5px;text-transform:uppercase;letter-spacing:.
  <section class="activo collapsed" id="ventas-digitales">
   <div class="activo-bar verde" role="button" tabindex="0" aria-expanded="false" data-activo="vd"><h2>🛒 Negocios digitales · Tienda seguros</h2><span class="bar-counters">🟢 16 · 🟡 4<span class="bar-toggle">▼</span></span></div>
   <div class="activo-body">
-  <div class="proposito-banner"><span class="pb-ico">🎯</span><p><strong>Propósito.</strong> Revolucionar la forma de comprar seguros, haciéndolos accesibles, simples y al alcance de todos, que comprar un seguro sea tan fácil y natural como cualquier compra en línea.</p></div>
+  <div class="proposito-banner"><svg class="pb-ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M15.09 14c.18-.98.65-1.74 1.41-2.5A4.65 4.65 0 0 0 18 8 6 6 0 0 0 6 8c0 1 .23 2.23 1.5 3.5.76.76 1.23 1.52 1.41 2.5"/></svg><div class="pb-text"><span class="pb-tag">Nuestro propósito</span><p>Hacer que <strong>comprar y vender seguros</strong> sea tan fácil y natural como cualquier compra en línea.</p></div></div>
   <div class="chips"><span class="chip">16 terminadas</span><span class="chip">4 en curso</span></div>
   <p class="proposito"><strong>Ventas Digitales (Tienda de Seguros).</strong> Canal digital de cotización, emisión y venta asistida de seguros. Cada indicador muestra su valor actual, el % de cumplimiento vs la meta y la iniciativa en curso que lo impacta.</p>
 
