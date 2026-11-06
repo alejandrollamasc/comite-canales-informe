@@ -15,9 +15,20 @@ body{margin:0;background:var(--bg);color:var(--txt);font-family:"Segoe UI",syste
 .eyebrow .dot{width:9px;height:9px;border-radius:50%;background:var(--amarillo)}
 .header h1{margin:14px 0 10px;font-size:30px;font-weight:800}
 .chip-date{display:inline-flex;align-items:center;gap:7px;background:rgba(0,0,0,.14);padding:7px 14px;border-radius:999px;font-size:14px}
-.activo{background:#fff;border:1px solid var(--bord);border-left:6px solid var(--verde);border-radius:16px;padding:22px;margin-top:26px;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.activo{background:#fff;border:1px solid var(--bord);border-left:6px solid var(--verde);border-radius:16px;padding:16px;margin-top:26px;box-shadow:0 2px 10px rgba(0,0,0,.04)}
+.activo.azul-activo{border-left-color:#2a5bb5}
 .activo-head{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .activo-head h2{margin:0;font-size:21px}
+.activo-bar{display:flex;align-items:center;gap:12px;cursor:pointer;color:#fff;border-radius:12px;padding:16px 18px;user-select:none;margin:0 0 2px}
+.activo-bar h2{margin:0;font-size:20px;color:#fff;display:flex;align-items:center;gap:10px}
+.activo-bar .bar-counters{margin-left:auto;display:flex;align-items:center;gap:10px;font-weight:700;font-size:14px}
+.activo-bar .bar-toggle{font-size:14px;transition:transform .2s}
+.activo.collapsed .bar-toggle{transform:rotate(-90deg)}
+.activo-bar.verde{background:linear-gradient(135deg,var(--verde),var(--verde-md))}
+.activo-bar.azul{background:linear-gradient(135deg,#2a5bb5,#1e3f80)}
+.activo-body{padding-top:14px}
+.activo.collapsed .activo-body{display:none}
+
 .counters{margin-left:auto;font-weight:700;color:var(--muted);font-size:14px}
 .chips{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
 .chip{background:var(--verde-suave);color:var(--verde-md);border:1px solid #cfe8d8;padding:5px 12px;border-radius:999px;font-size:13px;font-weight:600}
@@ -93,6 +104,9 @@ th{color:var(--muted);font-size:12.5px;text-transform:uppercase;letter-spacing:.
 .st.ref{background:#f0ecfb;color:#5b3bb5}
 .st.stop{background:#f1f1f1;color:#777}
 .desc-row td{background:#fafcfb;color:var(--txt);font-size:13px;padding:10px 12px}
+.desc-row[hidden]{display:none!important}
+.ini-table{table-layout:auto}
+
 /* ===== Responsive ===== */
 @media(max-width:980px){
  .wrap{padding:16px 14px 48px}
@@ -104,7 +118,12 @@ th{color:var(--muted);font-size:12.5px;text-transform:uppercase;letter-spacing:.
  .counters{margin-left:0;flex-basis:100%;order:3}
  .kpi-grid{grid-template-columns:repeat(auto-fill,minmax(210px,1fr))}
 }
-@media(max-width:720px){
+@media(max-width:720px){ 
+ /* mobile: iniciativas con scroll vertical y proporción estable */
+ #acc-vd-ini .acc-body{max-height:70vh;overflow-y:auto;-webkit-overflow-scrolling:touch}
+ .ini-row{overflow:hidden}
+ .desc-row td{padding:8px}
+
  .ini-table thead{display:none}
  .ini-table tbody{display:block}
  .ini-table tr{display:block}
@@ -203,8 +222,8 @@ th{color:var(--muted);font-size:12.5px;text-transform:uppercase;letter-spacing:.
  </div>
 
  <section class="activo" id="ventas-digitales">
-  <div class="activo-head"><h2>🛒 Negocios digitales - Tienda seguros</h2>
-   <span class="counters">🟢 16 · 🟡 4</span></div>
+  <div class="activo-bar verde" role="button" tabindex="0" aria-expanded="true" data-activo="vd"><h2>🛒 Negocios digitales · Tienda seguros</h2><span class="bar-counters">🟢 16 · 🟡 4<span class="bar-toggle">▼</span></span></div>
+  <div class="activo-body">
   <div class="proposito-banner"><span class="pb-ico">🎯</span><p><strong>Propósito.</strong> Revolucionar la forma de comprar seguros, haciéndolos accesibles, simples y al alcance de todos, que comprar un seguro sea tan fácil y natural como cualquier compra en línea.</p></div>
   <div class="chips"><span class="chip">16 terminadas</span><span class="chip">4 en curso</span></div>
   <p class="proposito"><strong>Ventas Digitales (Tienda de Seguros).</strong> Canal digital de cotización, emisión y venta asistida de seguros. Cada indicador muestra su valor actual, el % de cumplimiento vs la meta y la iniciativa en curso que lo impacta.</p>
@@ -353,13 +372,16 @@ th{color:var(--muted);font-size:12.5px;text-transform:uppercase;letter-spacing:.
    <div class="acc-body"><p class="proposito">Roadmap de cierre 2026 (nov–dic) e iniciativas que pasan como <strong>carry over a 2027</strong>. Las barras muestran el rango estimado de trabajo; la línea amarilla marca el corte (5 nov).</p>
     <div class="gantt"><div class="gantt-inner" id="gantt-vd"></div></div>
     <div class="lgd" style="margin-top:8px"><span><i style="background:#009C3C"></i>En curso / cierre</span><span><i style="background:#7a5cc0"></i>Planeado (nuevas)</span><span><i style="background:#b9c2cc"></i>Carry 2027</span><span><i style="background:#FFD100"></i>Hoy (5 nov)</span></div><button class="collapse">▲ Contraer</button></div></div>
+ </div>
  </section>
 
- <section class="activo" id="pagos-digitales">
-  <div class="activo-head"><h2>💳 Resumen del activo</h2></div>
+ <section class="activo azul-activo" id="pagos-digitales">
+  <div class="activo-bar azul" role="button" tabindex="0" aria-expanded="true" data-activo="pd"><h2>💳 Pagos digitales</h2><span class="bar-counters"><span class="bar-toggle">▼</span></span></div>
+  <div class="activo-body">
   <p class="proposito"><strong>Pagos Digitales (Pasarela de Pagos).</strong> Recaudo y pagos en línea. Solo monitoreo de indicadores: cada tarjeta muestra el valor actual, el % de cumplimiento vs meta y su tendencia.</p>
   <div class="acc" id="acc-pas-kpis"><div class="acc-head"><span class="t">📊 KPIs</span><button class="acc-toggle">Ver ▾</button></div>
    <div class="acc-body"><div class="kpi-container" data-group="pagos-digitales"></div><button class="collapse">▲ Contraer</button></div></div>
+ </div>
  </section>
 
  <div class="footer">Fuentes: Excel "KPIs Canales para Comité de Canales" (series mensuales 2026) · Jira GD917 (iniciativas y roadmap, Iteración 21).<br>
@@ -480,6 +502,21 @@ document.querySelectorAll('.acc').forEach(function(acc){
  head.addEventListener('click',function(){acc.classList.toggle('open');tg.textContent=acc.classList.contains('open')?'Ocultar ▴':'Ver ▾';});
  var col=acc.querySelector('.collapse'); if(col)col.addEventListener('click',function(e){e.stopPropagation();acc.classList.remove('open');tg.textContent='Ver ▾';});
 });
+// toggle de barras de activo (secciones colapsables)
+document.querySelectorAll('.activo-bar').forEach(function(bar){
+  function toggle(){
+    var sec=bar.closest('.activo');
+    var collapsed=sec.classList.toggle('collapsed');
+    bar.setAttribute('aria-expanded', collapsed?'false':'true');
+  }
+  bar.addEventListener('click',toggle);
+  bar.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();toggle();}});
+});
+// en mobile (<=720px) iniciar colapsadas
+if(window.matchMedia('(max-width:720px)').matches){
+  document.querySelectorAll('.activo').forEach(function(sec){sec.classList.add('collapsed');
+    var bar=sec.querySelector('.activo-bar'); if(bar)bar.setAttribute('aria-expanded','false');});
+}
 document.querySelectorAll('.kpi-container').forEach(renderKPIs);
 renderGantt();
 
