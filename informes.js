@@ -8,6 +8,9 @@
   ];
   var HOME_URL = 'home.html';
 
+  // Exponer la lista para que home.html (portada) use la misma fuente única.
+  try { window.INFORMES_LIST = INFORMES; } catch (e) {}
+
   function render() {
     var cont = document.getElementById('hub-nav');
     if (!cont) return;
